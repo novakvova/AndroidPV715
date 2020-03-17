@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -17,6 +20,13 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
     }
 
+    public void onClickRegister(View view) {
+        new MaterialAlertDialogBuilder(RegisterActivity.this)
+                .setTitle("Title")
+                .setMessage("Message")
+                .setPositiveButton("Ok", null)
+                .show();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
