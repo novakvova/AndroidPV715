@@ -8,17 +8,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_register);
     }
 
     @Override
@@ -43,16 +39,5 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public void onClickBegin(View view) {
-
-        EditText editText = findViewById(R.id.txtInfo);
-        String text = editText.getText().toString();
-
-        TextView textView = findViewById(R.id.txtViewMessage);
-        textView.setText(text);
-
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 }
