@@ -2,6 +2,8 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +15,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationHost {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container, new LoginFragment())
+                    .commit();
+        }
     }
 
     @Override
@@ -45,14 +53,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickBegin(View view) {
 
-        EditText editText = findViewById(R.id.txtInfo);
-        String text = editText.getText().toString();
+    @Override
+    public void navigateTo(Fragment fragment, boolean addToBackstack) {
+        FragmentTransaction transaction =
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, fragment);
 
-        TextView textView = findViewById(R.id.txtViewMessage);
-        textView.setText(text);
+        if (addToBackstack) {
+            transaction.addToBackStack(null);
+        }
 
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        transaction.commit();
     }
+
 }
