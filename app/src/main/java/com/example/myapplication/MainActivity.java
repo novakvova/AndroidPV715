@@ -45,9 +45,13 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
                 startActivity(intent);
                 return true;
             case R.id.register:
-//                intent = new Intent(this, RegisterActivity.class);
-//                startActivity(intent);
                 this.navigateTo(new RegisterFragment(), false);
+                return true;
+            case R.id.comands:
+                this.navigateTo(new ListViewSimpleFragment(), false);
+                return true;
+            case R.id.customListView:
+                this.navigateTo(new CustomListViewFragment(), false);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

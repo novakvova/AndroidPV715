@@ -9,4 +9,12 @@
     <item android:id="@+id/register"
         android:title="Реєстрація"
         app:showAsAction="never"/>
+
+    <item android:id="@+id/comands"
+        android:title="Команда"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/customListView"
+        android:title="Список друзів"
+        app:showAsAction="never"/>
 </menu>
