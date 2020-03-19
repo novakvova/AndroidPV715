@@ -72,17 +72,19 @@
             android:layout_height="match_parent"
             app:endIconMode="password_toggle"
             android:hint="@string/hint_password"
+
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:maxLines="1"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/confitmpassword_text_input"
+            android:id="@+id/confirm_password_text_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:endIconMode="password_toggle"
@@ -90,7 +92,7 @@
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/confirmpassword_edit_text"
+                android:id="@+id/confirm_password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />

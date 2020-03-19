@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,11 +44,14 @@ public class RegisterFragment extends Fragment {
         final TextInputLayout passwordTextInput = view.findViewById(R.id.password_text_input);
         final TextInputEditText passwordEditText = view.findViewById(R.id.password_edit_text);
 
+        final TextInputLayout confirmpasswordTextInput = view.findViewById(R.id.confirm_password_text_input);
+        final TextInputEditText confirmpasswordEditText = view.findViewById(R.id.confirm_password_edit_text);
+
         final TextInputLayout emailTextInput = view.findViewById(R.id.email_text_input);
         final TextInputEditText emailEditText = view.findViewById(R.id.email_edit_text);
 
-//        final TextInputEditText telephoneTextInput = view.findViewById(R.id.telephone_text_input);
-//        final TextInputEditText telephoneEditText = view.findViewById(R.id.telephone_edit_text);
+        final TextInputLayout telephoneTextInput = view.findViewById(R.id.telephone_text_input);
+        final TextInputEditText telephoneEditText = view.findViewById(R.id.telephone_edit_text);
 
 
 
@@ -65,6 +69,17 @@ public class RegisterFragment extends Fragment {
                     passwordTextInput.setError(null); // Clear the error
                     //((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false); // Navigate to the next Fragment
                 }
+                String pass1=confirmpasswordEditText.getText().toString();
+                String pass2=passwordEditText.getText().toString();
+                boolean ifEquals=pass1.equals(pass2);
+                Log.d("-----ffff-----","---fffff--- "+ifEquals);
+                if (!ifEquals) {
+                    confirmpasswordTextInput.setError("Паролі не співпадають");
+                    isvalid=false;
+                } else {
+                    confirmpasswordTextInput.setError(null); // Clear the error
+                    //((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false); // Navigate to the next Fragment
+                }
 
                 if (!isEmailValid(emailEditText.getText())) {
                     emailTextInput.setError("Невірно вказали пошту");
@@ -74,12 +89,12 @@ public class RegisterFragment extends Fragment {
                     //((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false); // Navigate to the next Fragment
                 }
 
-//                if(!isTelephoneValid(telephoneEditText.getText())){
-//                    telephoneTextInput.setError("Невірно вказали телефон");
-//                    isvalid=false;
-//                } else {
-//                    telephoneTextInput.setError(null); // Clear the error
-//                }
+                if(!isTelephoneValid(telephoneEditText.getText())){
+                    telephoneTextInput.setError("Невірно вказали телефон xxx-xxx-xxxx");
+                    isvalid=false;
+                } else {
+                    telephoneTextInput.setError(null); // Clear the error
+                }
 
                 if(isvalid){
                     //((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false); // Navigate to the next Fragment
@@ -96,9 +111,9 @@ public class RegisterFragment extends Fragment {
                     passwordTextInput.setError(null); //Clear the error
                     //return true;
                 }
-                else {
-                    passwordTextInput.setError("Пароль має бути мін 8 символів");
-                }
+//                else {
+//                    passwordTextInput.setError("Пароль має бути мін 8 символів");
+//                }
                 return false;
             }
         });
@@ -111,9 +126,24 @@ public class RegisterFragment extends Fragment {
                     emailTextInput.setError(null); //Clear the error
                     //return true;
                 }
-                else {
-                    emailTextInput.setError("Невірно вказали пошту");
+//                else {
+//                    emailTextInput.setError("Невірно вказали пошту");
+//                }
+                return false;
+            }
+        });
+
+        // Clear the error once more than 8 characters are typed.
+        telephoneEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (isTelephoneValid(telephoneEditText.getText())) {
+                    telephoneTextInput.setError(null); //Clear the error
+                    //return true;
                 }
+//                else {
+//                    emailTextInput.setError("Невірно вказали пошту");
+//                }
                 return false;
             }
         });
@@ -133,7 +163,7 @@ public class RegisterFragment extends Fragment {
 
     private boolean isTelephoneValid(@Nullable Editable text){
         final Pattern VALID_TELEPHONE_REGEX =
-                Pattern.compile("^\\+[0-9]{1,3}\\.[0-9]{4,14}(?:x.+)?$", Pattern.CASE_INSENSITIVE);
+                Pattern.compile("\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}", Pattern.CASE_INSENSITIVE);
         Matcher matcher = VALID_TELEPHONE_REGEX .matcher(text);
         return matcher.find();
     }
