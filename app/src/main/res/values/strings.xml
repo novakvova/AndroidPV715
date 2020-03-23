@@ -7,4 +7,6 @@
     <string name="hint_password">Пароль</string>
     <string name="button_next">Вхід</string>
     <string name="button_cancel">Відміна</string>
+    <string name="product_title">Назва продукта</string>
+    <string name="product_description">Ціна</string>
 </resources>
