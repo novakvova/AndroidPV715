@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProdNetworkService {
     private static ProdNetworkService mInstance;
-    private static final String BASE_URL = "http://10.0.2.2/api/";
+    private static final String BASE_URL = "https://masterlock20200324083512.azurewebsites.net/api/";
     private Retrofit mRetrofit;
 
     private ProdNetworkService() {
