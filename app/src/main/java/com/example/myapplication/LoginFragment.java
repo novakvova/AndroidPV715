@@ -70,7 +70,7 @@ public class LoginFragment extends Fragment {
                     passwordTextInput.setError("Пароль має бути мін 8 символів");
                 } else {
                     passwordTextInput.setError(null); // Clear the error
-                    ((NavigationHost) getActivity()).navigateTo(new UserGridFragment(), false); // Navigate to the next Fragment
+                    ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false); // Navigate to the next Fragment
                 }
             }
         });
