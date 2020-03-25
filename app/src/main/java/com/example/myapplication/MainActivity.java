@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.userview.UserGridFragment;
+
 public class MainActivity extends AppCompatActivity implements NavigationHost {
 
     @Override
@@ -52,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
                 return true;
             case R.id.customListView:
                 this.navigateTo(new CustomListViewFragment(), false);
+                return true;
+            case R.id.users:
+                this.navigateTo(new UserGridFragment(), false);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

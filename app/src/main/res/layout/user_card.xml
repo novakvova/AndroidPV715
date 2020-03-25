@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardElevation="2dp"
+    app:cardPreventCornerOverlap="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/user_image"
+            android:layout_width="120dp"
+            android:layout_height="125dp"
+            android:background="?attr/colorPrimaryDark"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/user_name"
+                android:textAppearance="?attr/textAppearanceBody2" />
+
+            <TextView
+                android:id="@+id/user_surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/user_surname"
+                android:textAppearance="?attr/textAppearanceBody2" />
+
+            <TextView
+                android:id="@+id/user_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/user_country"
+                android:textAppearance="?attr/textAppearanceBody2" />
+
+            <TextView
+                android:id="@+id/user_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/user_city"
+                android:textAppearance="?attr/textAppearanceBody2" />
+
+            <TextView
+                android:id="@+id/user_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/user_age"
+                android:textAppearance="?attr/textAppearanceBody2" />
+
+        </LinearLayout>
+    </LinearLayout>c
+</com.google.android.material.card.MaterialCardView>
