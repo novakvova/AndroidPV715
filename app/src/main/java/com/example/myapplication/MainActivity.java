@@ -16,9 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.userview.UserGridFragment;
+import com.example.myapplication.utils.network.RequestErrorNavigate;
 
-public class MainActivity extends AppCompatActivity implements NavigationHost {
+public class MainActivity extends AppCompatActivity implements NavigationHost, RequestErrorNavigate {
 
+    private Fragment callBackfragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,4 +80,14 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
         transaction.commit();
     }
 
+    @Override
+    public void navigateErrorPage(Fragment callBackfragment, boolean addToFackstack, String errorStr) {
+        this.callBackfragment=callBackfragment;
+        this.navigateTo(new ErrorFragment(errorStr), true);
+    }
+
+    @Override
+    public void returnRefreshPage() {
+        this.navigateTo(this.callBackfragment, true);
+    }
 }

@@ -17,6 +17,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.jsonretro.ProdNetworkService;
 import com.example.myapplication.jsonretro.ProductDTO;
 import com.example.myapplication.network.ProductEntry;
+import com.example.myapplication.utils.network.NoConnectivityException;
+import com.example.myapplication.utils.network.RequestErrorNavigate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class ProductGridFragment extends Fragment {
     private static final String TAG = ProductGridFragment.class.getSimpleName();
 
     RecyclerView recyclerView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,13 +69,13 @@ public class ProductGridFragment extends Fragment {
                 .enqueue(new Callback<List<ProductDTO>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<ProductDTO>> call, @NonNull Response<List<ProductDTO>> response) {
-                        List<ProductDTO> list= response.body();
-                        String res= list.get(0).toString();
-                        Log.d(TAG, "--------result server-------"+res);
+                        List<ProductDTO> list = response.body();
+                        String res = list.get(0).toString();
+                        Log.d(TAG, "--------result server-------" + res);
 
                         List<ProductEntry> newlist = new ArrayList<ProductEntry>();//ProductEntry.initProductEntryList(getResources());
                         for (ProductDTO item : list) {
-                            ProductEntry pe=new ProductEntry(item.getTitle(),item.getUrl(),item.getUrl(), item.getPrice(),"sdfasd");
+                            ProductEntry pe = new ProductEntry(item.getTitle(), item.getUrl(), item.getUrl(), item.getPrice(), "sdfasd");
                             newlist.add(pe);
                         }
                         ProductCardRecyclerViewAdapter newAdapter = new ProductCardRecyclerViewAdapter(newlist);
@@ -85,12 +88,11 @@ public class ProductGridFragment extends Fragment {
 
                     @Override
                     public void onFailure(@NonNull Call<List<ProductDTO>> call, @NonNull Throwable t) {
+                        ((RequestErrorNavigate) getActivity()).navigateErrorPage(new ProductGridFragment(), false, t.getMessage()); // Navigate to the next Fragment
 
-                        //textView.append("Error occurred while getting request!");
                         t.printStackTrace();
                     }
                 });
-
 
 
         return view;

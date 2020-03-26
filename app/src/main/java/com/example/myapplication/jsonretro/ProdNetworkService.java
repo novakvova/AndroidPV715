@@ -1,6 +1,8 @@
 package com.example.myapplication.jsonretro;
 
 
+import com.example.myapplication.utils.network.ConnectivityInterceptor;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -16,6 +18,7 @@ public class ProdNetworkService {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient.Builder client = new OkHttpClient.Builder()
+                .addInterceptor(new ConnectivityInterceptor())
                 .addInterceptor(interceptor);
 
         mRetrofit = new Retrofit.Builder()
