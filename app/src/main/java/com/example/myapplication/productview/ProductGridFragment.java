@@ -17,6 +17,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.jsonretro.ProdNetworkService;
 import com.example.myapplication.jsonretro.ProductDTO;
 import com.example.myapplication.network.ProductEntry;
+import com.example.myapplication.utils.network.CommonUtils;
 import com.example.myapplication.utils.network.NoConnectivityException;
 import com.example.myapplication.utils.network.RequestErrorNavigate;
 
@@ -44,7 +45,7 @@ public class ProductGridFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_grid, container, false);
-
+        CommonUtils.showLoading(getActivity());
         // Set up the RecyclerView
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -69,6 +70,7 @@ public class ProductGridFragment extends Fragment {
                 .enqueue(new Callback<List<ProductDTO>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<ProductDTO>> call, @NonNull Response<List<ProductDTO>> response) {
+                        CommonUtils.hideLoading();
                         List<ProductDTO> list = response.body();
                         String res = list.get(0).toString();
                         Log.d(TAG, "--------result server-------" + res);
@@ -88,6 +90,7 @@ public class ProductGridFragment extends Fragment {
 
                     @Override
                     public void onFailure(@NonNull Call<List<ProductDTO>> call, @NonNull Throwable t) {
+                        CommonUtils.hideLoading();
                         ((RequestErrorNavigate) getActivity()).navigateErrorPage(new ProductGridFragment(), false, t.getMessage()); // Navigate to the next Fragment
 
                         t.printStackTrace();

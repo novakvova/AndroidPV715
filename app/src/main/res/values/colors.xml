@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="productGridBackgroundColor">#FFFFFF</color>
+    <color name="black_effective">#2a2a2a</color>
+    <color name="colorBadRequest">#FF0000</color>
 </resources>
