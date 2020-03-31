@@ -1,11 +1,11 @@
-package com.example.myapplication.jsonretro;
-
+package com.example.myapplication.productCreate.network;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.myapplication.application.MyApplication;
-import com.example.myapplication.utils.network.ConnectivityInterceptor;
+import com.example.myapplication.jsonretro.ProdNetworkService;
+import com.example.myapplication.jsonretro.ProductHolderApi;
 
 import java.io.IOException;
 
@@ -17,13 +17,13 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ProdNetworkService {
+public class ProductCreateService {
     private final Context context;
-    private static ProdNetworkService mInstance;
-    private static final String BASE_URL = "https://masterlock20200324083512.azurewebsites.net/api/";
+    private static ProductCreateService mInstance;
+    private static final String BASE_URL = "https://masterlock20200324083512.azurewebsites.net/api/products/";
     private Retrofit mRetrofit;
 
-    public ProdNetworkService() {
+    private ProductCreateService() {
         context = MyApplication.getAppContext();
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -46,11 +46,6 @@ public class ProdNetworkService {
                 .addInterceptor(interJWT)
                 .addInterceptor(interceptor);
 
-
-//        OkHttpClient.Builder client = new OkHttpClient.Builder()
-//                .addInterceptor(new ConnectivityInterceptor())
-//                .addInterceptor(interceptor);
-
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -58,14 +53,14 @@ public class ProdNetworkService {
                 .build();
     }
 
-    public static ProdNetworkService getInstance() {
+    public static ProductCreateService getInstance() {
         if (mInstance == null) {
-            mInstance = new ProdNetworkService();
+            mInstance = new ProductCreateService();
         }
         return mInstance;
     }
 
-    public ProductHolderApi getJSONApi() {
-        return mRetrofit.create(ProductHolderApi.class);
+    public ProductCreateHolderApi getJSONApi() {
+        return mRetrofit.create(ProductCreateHolderApi.class);
     }
 }

@@ -13,13 +13,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.myapplication.NavigationHost;
 import com.example.myapplication.R;
 import com.example.myapplication.jsonretro.ProdNetworkService;
 import com.example.myapplication.jsonretro.ProductDTO;
 import com.example.myapplication.network.ProductEntry;
+import com.example.myapplication.productCreate.ProductCreateFragment;
 import com.example.myapplication.utils.network.CommonUtils;
 import com.example.myapplication.utils.network.NoConnectivityException;
 import com.example.myapplication.utils.network.RequestErrorNavigate;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +49,18 @@ public class ProductGridFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_grid, container, false);
+        MaterialButton addButton = view.findViewById(R.id.add_button);
+        final TextInputEditText productTitleEditText = view.findViewById(R.id.product_title_edit_text);
+        final TextInputEditText productPriceEditText = view.findViewById(R.id.price_edit_text);
+
+        // Set an error if the password is less than 8 characters.
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((NavigationHost) getActivity()).navigateTo(new ProductCreateFragment(), false);
+
+            }
+        });
         CommonUtils.showLoading(getActivity());
         // Set up the RecyclerView
         recyclerView = view.findViewById(R.id.recycler_view);
