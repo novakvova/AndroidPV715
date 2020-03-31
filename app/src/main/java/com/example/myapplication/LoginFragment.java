@@ -24,6 +24,7 @@ import com.example.myapplication.account.LoginDTOBadRequest;
 import com.example.myapplication.account.TokenDTO;
 import com.example.myapplication.productview.ProductGridFragment;
 import com.example.myapplication.userview.UserGridFragment;
+import com.example.myapplication.utils.network.CommonUtils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -96,6 +97,7 @@ public class LoginFragment extends Fragment {
 
                     LoginDTO loginDTO=new LoginDTO(login, password);
                     errorMessage.setText("");
+                    CommonUtils.showLoading(getActivity());
                     AccountService.getInstance()
                             .getJSONApi()
                             .loginRequest(loginDTO)
@@ -120,6 +122,7 @@ public class LoginFragment extends Fragment {
                                             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                                         }
                                     }
+                                    CommonUtils.hideLoading();
 
                                     //Log.d(TAG,tokenDTO.toString());
                                     //CommonUtils.hideLoading();
@@ -130,6 +133,7 @@ public class LoginFragment extends Fragment {
                                     //CommonUtils.hideLoading();
                                     Log.e("ERROR","*************ERORR request***********");
                                     t.printStackTrace();
+                                    CommonUtils.hideLoading();
                                 }
                             });
                 }
