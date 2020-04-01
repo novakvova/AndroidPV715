@@ -1,4 +1,4 @@
-package com.example.myapplication.productview.network;
+package com.example.myapplication.productview.dto;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

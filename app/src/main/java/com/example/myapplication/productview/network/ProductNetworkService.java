@@ -16,13 +16,13 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ProdNetworkService {
+public class ProductNetworkService {
     private final Context context;
-    private static ProdNetworkService mInstance;
+    private static ProductNetworkService mInstance;
     private static final String BASE_URL = "https://masterlock20200324083512.azurewebsites.net/api/";
     private Retrofit mRetrofit;
 
-    private ProdNetworkService() {
+    private ProductNetworkService() {
         context = MyApplication.getAppContext();
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -58,9 +58,9 @@ public class ProdNetworkService {
                 .build();
     }
 
-    public static ProdNetworkService getInstance() {
+    public static ProductNetworkService getInstance() {
         if (mInstance == null) {
-            mInstance = new ProdNetworkService();
+            mInstance = new ProductNetworkService();
         }
         return mInstance;
     }

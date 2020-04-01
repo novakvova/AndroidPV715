@@ -15,9 +15,8 @@ import android.widget.Button;
 
 import com.example.myapplication.NavigationHost;
 import com.example.myapplication.R;
-import com.example.myapplication.productCreate.ProductCreateFragment;
-import com.example.myapplication.productview.network.ProdNetworkService;
-import com.example.myapplication.productview.network.ProductDTO;
+import com.example.myapplication.productview.network.ProductNetworkService;
+import com.example.myapplication.productview.dto.ProductDTO;
 import com.example.myapplication.network.ProductEntry;
 import com.example.myapplication.utils.network.CommonUtils;
 import com.example.myapplication.utils.network.RequestErrorNavigate;
@@ -72,7 +71,7 @@ public class ProductGridFragment extends Fragment {
         recyclerView.addItemDecoration(new ProductGridItemDecoration(largePadding, smallPadding));
 
 
-        ProdNetworkService.getInstance()
+        ProductNetworkService.getInstance()
                 .getJSONApi()
                 .getAllProducts()
                 .enqueue(new Callback<List<ProductDTO>>() {

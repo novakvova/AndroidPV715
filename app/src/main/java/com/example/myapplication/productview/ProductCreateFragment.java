@@ -1,4 +1,4 @@
-package com.example.myapplication.productCreate;
+package com.example.myapplication.productview;
 
 import android.os.Bundle;
 
@@ -9,22 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.myapplication.NavigationHost;
 import com.example.myapplication.R;
-import com.example.myapplication.account.AccountService;
-import com.example.myapplication.account.JwtServiceHolder;
-import com.example.myapplication.account.LoginDTO;
-import com.example.myapplication.account.LoginDTOBadRequest;
-import com.example.myapplication.account.TokenDTO;
-import com.example.myapplication.productCreate.network.ProductCreateDTO;
-import com.example.myapplication.productCreate.network.ProductCreateResultDTO;
-import com.example.myapplication.productCreate.network.ProductCreateService;
-import com.example.myapplication.productview.ProductGridFragment;
+import com.example.myapplication.productview.dto.ProductCreateDTO;
+import com.example.myapplication.productview.dto.ProductCreateResultDTO;
+import com.example.myapplication.productview.network.ProductNetworkService;
 import com.example.myapplication.utils.network.CommonUtils;
 import com.google.android.material.button.MaterialButton;
-import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,7 +48,7 @@ public class ProductCreateFragment extends Fragment {
                // Toast.makeText(getActivity(), "Add ", Toast.LENGTH_SHORT).show();
                 ProductCreateDTO productCreateDTO=new ProductCreateDTO("Носки", "25");
                 CommonUtils.showLoading(getActivity());
-                ProductCreateService.getInstance()
+                ProductNetworkService.getInstance()
                         .getJSONApi()
                         .CreateRequest(productCreateDTO)
                         .enqueue(new Callback<ProductCreateResultDTO>() {
