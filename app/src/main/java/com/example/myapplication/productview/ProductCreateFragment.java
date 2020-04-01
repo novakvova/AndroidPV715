@@ -17,6 +17,7 @@ import com.example.myapplication.productview.dto.ProductCreateResultDTO;
 import com.example.myapplication.productview.network.ProductNetworkService;
 import com.example.myapplication.utils.network.CommonUtils;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,6 +39,8 @@ public class ProductCreateFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product_create, container, false);
 
         MaterialButton addButton = view.findViewById(R.id.add_button);
+        final TextInputEditText titleEditText = view.findViewById(R.id.product_title_edit_text);
+        final TextInputEditText priceEditText = view.findViewById(R.id.price_edit_text);
 
         // Set an error if the password is less than 8 characters.
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +49,7 @@ public class ProductCreateFragment extends Fragment {
               //  ((NavigationHost) getActivity()).navigateTo(new ProductCreateFragment(), false);
 
                // Toast.makeText(getActivity(), "Add ", Toast.LENGTH_SHORT).show();
-                ProductCreateDTO productCreateDTO=new ProductCreateDTO("Носки", "25");
+                ProductCreateDTO productCreateDTO=new ProductCreateDTO(titleEditText.getText().toString(), priceEditText.getText().toString());
                 CommonUtils.showLoading(getActivity());
                 ProductNetworkService.getInstance()
                         .getJSONApi()
