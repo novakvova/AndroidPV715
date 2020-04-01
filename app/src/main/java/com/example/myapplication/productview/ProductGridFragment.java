@@ -11,8 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.myapplication.NavigationHost;
 import com.example.myapplication.R;
+import com.example.myapplication.productCreate.ProductCreateFragment;
 import com.example.myapplication.productview.network.ProdNetworkService;
 import com.example.myapplication.productview.network.ProductDTO;
 import com.example.myapplication.network.ProductEntry;
@@ -49,7 +52,14 @@ public class ProductGridFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2,
                 GridLayoutManager.VERTICAL, false));
+        Button addButton = view.findViewById(R.id.add_button);
 
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new ProductCreateFragment(), true);
+            }
+        });
 //        List<ProductEntry> list = ProductEntry.initProductEntryList(getResources());
 //        ProductCardRecyclerViewAdapter adapter = new ProductCardRecyclerViewAdapter(list);
 //

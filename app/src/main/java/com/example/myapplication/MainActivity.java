@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.account.JwtServiceHolder;
+import com.example.myapplication.productview.ProductGridFragment;
 import com.example.myapplication.userview.UserGridFragment;
 import com.example.myapplication.utils.network.RequestErrorNavigate;
 
@@ -28,12 +29,22 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.container, new LoginFragment())
-                    .commit();
+
+        if(savedInstanceState == null) {
+            String token = this.getToken();
+            if (token != null || token.equals("")) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container, new ProductGridFragment())
+                        .commit();
+            } else {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container, new LoginFragment())
+                        .commit();
+            }
         }
+
     }
 
     @Override
