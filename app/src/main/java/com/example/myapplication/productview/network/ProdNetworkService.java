@@ -1,11 +1,10 @@
-package com.example.myapplication.jsonretro;
+package com.example.myapplication.productview.network;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
+import com.example.myapplication.account.JwtServiceHolder;
 import com.example.myapplication.application.MyApplication;
-import com.example.myapplication.utils.network.ConnectivityInterceptor;
 
 import java.io.IOException;
 
@@ -23,17 +22,18 @@ public class ProdNetworkService {
     private static final String BASE_URL = "https://masterlock20200324083512.azurewebsites.net/api/";
     private Retrofit mRetrofit;
 
-    public ProdNetworkService() {
+    private ProdNetworkService() {
         context = MyApplication.getAppContext();
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        SharedPreferences prefs=context.getSharedPreferences("jwtStore", Context.MODE_PRIVATE);
-        final String token = "Bearer "+ prefs.getString("token","");
-
         Interceptor interJWT = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
+                MyApplication context = (MyApplication)MyApplication.getAppContext();
+                JwtServiceHolder jwtService = (JwtServiceHolder)context.getCurrentActivity();
+                String token = "Bearer "+ jwtService.getToken();
+
                 Request originalRequest = chain.request();
                 Request newRequest = originalRequest.newBuilder()
                         .header("Authorization", token)

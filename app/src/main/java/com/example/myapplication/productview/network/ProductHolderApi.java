@@ -1,4 +1,4 @@
-package com.example.myapplication.jsonretro;
+package com.example.myapplication.productview.network;
 
 import java.util.List;
 

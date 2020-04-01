@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.jsonretro.ProdNetworkService;
-import com.example.myapplication.jsonretro.ProductDTO;
 import com.example.myapplication.jsonretro.UserDTO;
 import com.example.myapplication.jsonretro.UserNetworkService;
 import com.example.myapplication.network.ProductEntry;

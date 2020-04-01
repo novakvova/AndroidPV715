@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.myapplication.application.MyApplication;
-import com.example.myapplication.jsonretro.ProdNetworkService;
-import com.example.myapplication.jsonretro.ProductHolderApi;
 
 import java.io.IOException;
 

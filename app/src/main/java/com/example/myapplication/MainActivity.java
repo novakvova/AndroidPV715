@@ -22,9 +22,8 @@ import com.example.myapplication.account.JwtServiceHolder;
 import com.example.myapplication.userview.UserGridFragment;
 import com.example.myapplication.utils.network.RequestErrorNavigate;
 
-public class MainActivity extends AppCompatActivity implements NavigationHost, RequestErrorNavigate, JwtServiceHolder {
+public class MainActivity extends BaseActivity {
 
-    private Fragment callBackfragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,51 +70,5 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, R
 
     }
 
-    @Override
-    public void SaveJWTToken(String token) {
-        SharedPreferences prefs;
-        SharedPreferences.Editor edit;
-        prefs=this.getSharedPreferences("jwtStore", Context.MODE_PRIVATE);
-        edit=prefs.edit();
-        try {
-            edit.putString("token",token);
-            Log.i("Login",token);
-            edit.commit();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
 
-    @Override
-    public String getToken() {
-        SharedPreferences prefs=this.getSharedPreferences("jwtStore",Context.MODE_PRIVATE);
-        String token = prefs.getString("token","");
-        return token;
-    }
-    @Override
-    public void navigateTo(Fragment fragment, boolean addToBackstack) {
-        FragmentTransaction transaction =
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container, fragment);
-
-        if (addToBackstack) {
-            transaction.addToBackStack(null);
-        }
-
-        transaction.commit();
-    }
-
-    @Override
-    public void navigateErrorPage(Fragment callBackfragment, boolean addToFackstack, String errorStr) {
-        this.callBackfragment=callBackfragment;
-        this.navigateTo(new ErrorFragment(errorStr), true);
-    }
-
-    @Override
-    public void returnRefreshPage() {
-        this.navigateTo(this.callBackfragment, true);
-    }
 }
