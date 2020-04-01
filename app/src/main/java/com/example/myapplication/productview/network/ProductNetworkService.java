@@ -7,6 +7,7 @@ import com.example.myapplication.account.JwtServiceHolder;
 import com.example.myapplication.application.MyApplication;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -43,6 +44,8 @@ public class ProductNetworkService {
         };
 
         OkHttpClient.Builder client = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
                 .addInterceptor(interJWT)
                 .addInterceptor(interceptor);
 

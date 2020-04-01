@@ -74,6 +74,10 @@ public class MainActivity extends BaseActivity {
             case R.id.users:
                 this.navigateTo(new UserGridFragment(), false);
                 return true;
+            case R.id.logout:
+                this.removeToken();
+                this.navigateTo(new LoginFragment(), false);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

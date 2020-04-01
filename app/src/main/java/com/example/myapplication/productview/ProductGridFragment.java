@@ -77,20 +77,35 @@ public class ProductGridFragment extends Fragment {
                 .enqueue(new Callback<List<ProductDTO>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<ProductDTO>> call, @NonNull Response<List<ProductDTO>> response) {
-                        CommonUtils.hideLoading();
-                        List<ProductDTO> list = response.body();
-                        String res = list.get(0).toString();
-                        Log.d(TAG, "--------result server-------" + res);
 
-                        List<ProductEntry> newlist = new ArrayList<ProductEntry>();//ProductEntry.initProductEntryList(getResources());
-                        for (ProductDTO item : list) {
-                            ProductEntry pe = new ProductEntry(item.getTitle(), item.getUrl(), item.getUrl(), item.getPrice(), "sdfasd");
-                            newlist.add(pe);
+                        if (response.isSuccessful()) {
+                            List<ProductDTO> list = response.body();
+                            String res = list.get(0).toString();
+                            Log.d(TAG, "--------result server-------" + res);
+
+                            List<ProductEntry> newlist = new ArrayList<ProductEntry>();//ProductEntry.initProductEntryList(getResources());
+                            for (ProductDTO item : list) {
+                                ProductEntry pe = new ProductEntry(item.getTitle(), item.getUrl(), item.getUrl(), item.getPrice(), "sdfasd");
+                                newlist.add(pe);
+                            }
+                            ProductCardRecyclerViewAdapter newAdapter = new ProductCardRecyclerViewAdapter(newlist);
+
+                            recyclerView.swapAdapter(newAdapter, false);
                         }
-                        ProductCardRecyclerViewAdapter newAdapter = new ProductCardRecyclerViewAdapter(newlist);
+                        else {
+                            //  Log.e(TAG, "_______________________" + response.errorBody().charStream());
 
-                        recyclerView.swapAdapter(newAdapter, false);
-
+//                                    try {
+//                                        String json = response.errorBody().string();
+//                                        Gson gson = new Gson();
+//                                        LoginDTOBadRequest resultBad = gson.fromJson(json, LoginDTOBadRequest.class);
+//                                        //Log.d(TAG,"++++++++++++++++++++++++++++++++"+response.errorBody().string());
+//                                        errorMessage.setText(resultBad.getInvalid());
+//                                    } catch (Exception e) {
+//                                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+//                                    }
+                        }
+                        CommonUtils.hideLoading();
 
                         //Toast.makeText(getActivity(), "Hello result"+ res.size(), Toast.LENGTH_LONG);
                     }
