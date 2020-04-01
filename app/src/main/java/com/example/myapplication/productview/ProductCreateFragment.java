@@ -9,15 +9,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.myapplication.NavigationHost;
 import com.example.myapplication.R;
 import com.example.myapplication.productview.dto.ProductCreateDTO;
+import com.example.myapplication.productview.dto.ProductCreateInvalidDTO;
 import com.example.myapplication.productview.dto.ProductCreateResultDTO;
 import com.example.myapplication.productview.network.ProductNetworkService;
 import com.example.myapplication.utils.network.CommonUtils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +44,8 @@ public class ProductCreateFragment extends Fragment {
         MaterialButton addButton = view.findViewById(R.id.add_button);
         final TextInputEditText titleEditText = view.findViewById(R.id.product_title_edit_text);
         final TextInputEditText priceEditText = view.findViewById(R.id.price_edit_text);
+final TextView errormessage = view.findViewById(R.id.error_message);
+
 
         // Set an error if the password is less than 8 characters.
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +62,7 @@ public class ProductCreateFragment extends Fragment {
                         .enqueue(new Callback<ProductCreateResultDTO>() {
                             @Override
                             public void onResponse(@NonNull Call<ProductCreateResultDTO> call, @NonNull Response<ProductCreateResultDTO> response) {
+                                errormessage.setText("");
                                 if (response.isSuccessful()) {
                                     ProductCreateResultDTO resultDTO = response.body();
                                     ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false); // Navigate to the products Fragment
@@ -64,15 +70,15 @@ public class ProductCreateFragment extends Fragment {
                                 } else {
                                   //  Log.e(TAG, "_______________________" + response.errorBody().charStream());
 
-//                                    try {
-//                                        String json = response.errorBody().string();
-//                                        Gson gson = new Gson();
-//                                        LoginDTOBadRequest resultBad = gson.fromJson(json, LoginDTOBadRequest.class);
-//                                        //Log.d(TAG,"++++++++++++++++++++++++++++++++"+response.errorBody().string());
-//                                        errorMessage.setText(resultBad.getInvalid());
-//                                    } catch (Exception e) {
-//                                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-//                                    }
+                                    try {
+                                        String json = response.errorBody().string();
+                                        Gson gson  = new Gson();
+                                        ProductCreateInvalidDTO resultBad = gson.fromJson(json, ProductCreateInvalidDTO.class);
+                                        //Log.d(TAG,"++++++++++++++++++++++++++++++++"+response.errorBody().string());
+                                        errormessage.setText(resultBad.getInvalid());
+                                    } catch (Exception e) {
+                                        //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
                                 }
                                 CommonUtils.hideLoading();
 
