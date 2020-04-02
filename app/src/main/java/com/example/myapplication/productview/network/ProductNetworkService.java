@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.myapplication.account.JwtServiceHolder;
 import com.example.myapplication.application.MyApplication;
+import com.example.myapplication.network.interceptors.AuthorizationInterceptor;
 import com.example.myapplication.network.interceptors.JWTInterceptor;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ public class ProductNetworkService {
         OkHttpClient.Builder client = new OkHttpClient.Builder()
                 .readTimeout(60, TimeUnit.SECONDS)
                 .connectTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor(new AuthorizationInterceptor())
                 .addInterceptor(new JWTInterceptor())
                 .addInterceptor(interceptor);
 
