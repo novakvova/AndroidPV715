@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.myapplication.account.JwtServiceHolder;
 import com.example.myapplication.application.MyApplication;
+import com.example.myapplication.network.interceptors.JWTInterceptor;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -28,25 +29,12 @@ public class ProductNetworkService {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        Interceptor interJWT = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                MyApplication context = (MyApplication)MyApplication.getAppContext();
-                JwtServiceHolder jwtService = (JwtServiceHolder)context.getCurrentActivity();
-                String token = "Bearer "+ jwtService.getToken();
 
-                Request originalRequest = chain.request();
-                Request newRequest = originalRequest.newBuilder()
-                        .header("Authorization", token)
-                        .build();
-                return chain.proceed(newRequest);
-            }
-        };
 
         OkHttpClient.Builder client = new OkHttpClient.Builder()
                 .readTimeout(60, TimeUnit.SECONDS)
                 .connectTimeout(60, TimeUnit.SECONDS)
-                .addInterceptor(interJWT)
+                .addInterceptor(new JWTInterceptor())
                 .addInterceptor(interceptor);
 
 
