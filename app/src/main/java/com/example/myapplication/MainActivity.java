@@ -59,8 +59,7 @@ public class MainActivity extends BaseActivity {
         Intent intent;
         switch(item.getItemId()) {
             case R.id.home:
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                this.navigateTo(new ProductGridFragment(), false);
                 return true;
             case R.id.register:
                 this.navigateTo(new RegisterFragment(), false);
