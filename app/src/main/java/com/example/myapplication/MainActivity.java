@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity {
 
         if(savedInstanceState == null) {
             String token = this.getToken();
-            if (token != null || token.equals("")) {
+            if (token != null && !token.isEmpty()) {
                 getSupportFragmentManager()
                         .beginTransaction()
                         .add(R.id.container, new ProductGridFragment())
