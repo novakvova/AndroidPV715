@@ -6,4 +6,5 @@
     <color name="productGridBackgroundColor">#FFFFFF</color>
     <color name="black_effective">#2a2a2a</color>
     <color name="colorBadRequest">#FF0000</color>
+    <color name="colorIcons">#FFFFFF</color>
 </resources>

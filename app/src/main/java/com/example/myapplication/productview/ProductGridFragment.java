@@ -113,7 +113,7 @@ public class ProductGridFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Call<List<ProductDTO>> call, @NonNull Throwable t) {
                         CommonUtils.hideLoading();
-                        ((RequestErrorNavigate) getActivity()).navigateErrorPage(new ProductGridFragment(), false, t.getMessage()); // Navigate to the next Fragment
+                     //   ((RequestErrorNavigate) getActivity()).navigateErrorPage(new ProductGridFragment(), false, t.getMessage()); // Navigate to the next Fragment
 
                         t.printStackTrace();
                     }

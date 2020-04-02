@@ -13,9 +13,10 @@ import com.example.myapplication.application.MyApplication;
 import com.example.myapplication.utils.network.RequestErrorNavigate;
 
 public abstract class BaseActivity  extends AppCompatActivity implements NavigationHost,
-        RequestErrorNavigate, JwtServiceHolder {
+         JwtServiceHolder, ConnectionInternetError {
 
-    private Fragment callBackfragment;
+    private Fragment callbackFragment;
+    protected Fragment currentFragment;
 
     public BaseActivity() {
         MyApplication myApp=(MyApplication)MyApplication.getAppContext();
@@ -64,10 +65,11 @@ public abstract class BaseActivity  extends AppCompatActivity implements Navigat
     }
     @Override
     public void navigateTo(Fragment fragment, boolean addToBackstack) {
+        this.currentFragment = fragment;
         FragmentTransaction transaction =
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.container, fragment);
+                        .replace(R.id.container, this.currentFragment);
 
         if (addToBackstack) {
             transaction.addToBackStack(null);
@@ -77,13 +79,13 @@ public abstract class BaseActivity  extends AppCompatActivity implements Navigat
     }
 
     @Override
-    public void navigateErrorPage(Fragment callBackfragment, boolean addToFackstack, String errorStr) {
-        this.callBackfragment=callBackfragment;
-        this.navigateTo(new ErrorFragment(errorStr), true);
+    public void navigateErrorPage() {
+        this.callbackFragment=currentFragment;
+        this.navigateTo(new ConnectionInternetErrorFragment(), true);
     }
 
     @Override
-    public void returnRefreshPage() {
-        this.navigateTo(this.callBackfragment, true);
+    public void refreshCurrentErrorPage() {
+        this.navigateTo(this.callbackFragment, true);
     }
 }
