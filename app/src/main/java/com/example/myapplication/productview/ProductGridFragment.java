@@ -15,6 +15,8 @@ import android.widget.Button;
 
 import com.example.myapplication.NavigationHost;
 import com.example.myapplication.R;
+import com.example.myapplication.productview.click_listeners.OnDeleteListener;
+import com.example.myapplication.productview.click_listeners.OnEditListener;
 import com.example.myapplication.productview.network.ProductNetworkService;
 import com.example.myapplication.productview.dto.ProductDTO;
 import com.example.myapplication.network.ProductEntry;
@@ -29,11 +31,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class ProductGridFragment extends Fragment {
+public class ProductGridFragment extends Fragment implements OnEditListener, OnDeleteListener {
 
     private static final String TAG = ProductGridFragment.class.getSimpleName();
 
     RecyclerView recyclerView;
+    private List<ProductEntry> listProductEntry;
+    private ProductCardRecyclerViewAdapter productEntryAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,10 @@ public class ProductGridFragment extends Fragment {
 
         recyclerView.addItemDecoration(new ProductGridItemDecoration(largePadding, smallPadding));
 
+        listProductEntry = new ArrayList<ProductEntry>();
+        productEntryAdapter = new ProductCardRecyclerViewAdapter(listProductEntry, this, this);
+
+        recyclerView.setAdapter(productEntryAdapter);
 
         ProductNetworkService.getInstance()
                 .getJSONApi()
@@ -84,14 +92,16 @@ public class ProductGridFragment extends Fragment {
 //                            String res = list.get(0).toString();
 //                            Log.d(TAG, "--------result server-------" + res);
 
-                            List<ProductEntry> newlist = new ArrayList<ProductEntry>();//ProductEntry.initProductEntryList(getResources());
+                            //List<ProductEntry> newlist = new ArrayList<ProductEntry>();//ProductEntry.initProductEntryList(getResources());
+
                             for (ProductDTO item : list) {
                                 ProductEntry pe = new ProductEntry(item.getTitle(), item.getUrl(), item.getUrl(), item.getPrice(), "sdfasd");
-                                newlist.add(pe);
+                                listProductEntry.add(pe);
                             }
-                            ProductCardRecyclerViewAdapter newAdapter = new ProductCardRecyclerViewAdapter(newlist);
+                            productEntryAdapter.notifyDataSetChanged();
 
-                            recyclerView.swapAdapter(newAdapter, false);
+
+
                         }
                         else {
                             //  Log.e(TAG, "_______________________" + response.errorBody().charStream());
@@ -121,5 +131,20 @@ public class ProductGridFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void deleteItem(ProductEntry productEntry) {
+        listProductEntry.remove(productEntry);
+        productEntryAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void editItem(ProductEntry productEntry, int index) {
+//        Intent intent = new Intent(this, EditActivity.class);
+//        intent.putExtra(Constants.PERSON_INTENT_EDIT, true);
+//        intent.putExtra(Constants.PERSON_INTENT_INDEX, index);
+//        intent.putExtra(Constants.PERSON_INTENT_OBJECT, person);
+//        startActivityForResult(intent, REQUEST_CODE_EDIT);
     }
 }

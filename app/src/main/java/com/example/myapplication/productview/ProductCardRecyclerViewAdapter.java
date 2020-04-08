@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.network.ImageRequester;
 import com.example.myapplication.network.ProductEntry;
+import com.example.myapplication.productview.click_listeners.OnDeleteListener;
+import com.example.myapplication.productview.click_listeners.OnEditListener;
 
 import java.util.List;
 
@@ -21,8 +23,15 @@ public class ProductCardRecyclerViewAdapter extends RecyclerView.Adapter<Product
     private List<ProductEntry> productList;
     private ImageRequester imageRequester;
 
-    ProductCardRecyclerViewAdapter(List<ProductEntry> productList) {
+    private OnDeleteListener deleteListener;
+    private OnEditListener editListener;
+
+    ProductCardRecyclerViewAdapter(List<ProductEntry> productList,
+                                   OnDeleteListener deleteListener,
+                                   OnEditListener editListener) {
         this.productList = productList;
+        this.deleteListener = deleteListener;
+        this.editListener = editListener;
         imageRequester = ImageRequester.getInstance();
     }
 
