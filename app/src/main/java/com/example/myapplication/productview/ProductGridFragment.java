@@ -81,8 +81,8 @@ public class ProductGridFragment extends Fragment {
 
                         if (response.isSuccessful()) {
                             List<ProductDTO> list = response.body();
-                            String res = list.get(0).toString();
-                            Log.d(TAG, "--------result server-------" + res);
+//                            String res = list.get(0).toString();
+//                            Log.d(TAG, "--------result server-------" + res);
 
                             List<ProductEntry> newlist = new ArrayList<ProductEntry>();//ProductEntry.initProductEntryList(getResources());
                             for (ProductDTO item : list) {
