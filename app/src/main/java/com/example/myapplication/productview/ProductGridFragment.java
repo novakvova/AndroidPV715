@@ -77,6 +77,7 @@ public class ProductGridFragment extends Fragment {
                 .enqueue(new Callback<List<ProductDTO>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<ProductDTO>> call, @NonNull Response<List<ProductDTO>> response) {
+                        CommonUtils.hideLoading();
 
                         if (response.isSuccessful()) {
                             List<ProductDTO> list = response.body();
@@ -105,7 +106,6 @@ public class ProductGridFragment extends Fragment {
 //                                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 //                                    }
                         }
-                        CommonUtils.hideLoading();
 
                         //Toast.makeText(getActivity(), "Hello result"+ res.size(), Toast.LENGTH_LONG);
                     }
