@@ -121,10 +121,8 @@ public class ProductCreateFragment extends Fragment {
 
                             }
                         });
-
             }
         });
-
 
         return view;
     }
