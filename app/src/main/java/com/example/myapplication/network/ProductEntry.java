@@ -24,15 +24,16 @@ import java.util.List;
  */
 public class ProductEntry {
     private static final String TAG = ProductEntry.class.getSimpleName();
-
+    public final int id;
     public final String title;
     public final Uri dynamicUrl;
     public final String url;
     public final String price;
     public final String description;
 
-    public ProductEntry(
+    public ProductEntry( int id,
             String title, String dynamicUrl, String url, String price, String description) {
+        this.id = id;
         this.title = title;
         this.dynamicUrl = Uri.parse(dynamicUrl);
         this.url = url;

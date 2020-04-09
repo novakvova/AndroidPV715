@@ -1,5 +1,6 @@
 package com.example.myapplication.productview;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,20 +13,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.myapplication.NavigationHost;
 import com.example.myapplication.R;
 import com.example.myapplication.productview.click_listeners.OnDeleteListener;
 import com.example.myapplication.productview.click_listeners.OnEditListener;
+import com.example.myapplication.productview.dto.ProductCreateInvalidDTO;
+import com.example.myapplication.productview.dto.ProductCreateResultDTO;
 import com.example.myapplication.productview.network.ProductNetworkService;
 import com.example.myapplication.productview.dto.ProductDTO;
 import com.example.myapplication.network.ProductEntry;
 import com.example.myapplication.utils.network.CommonUtils;
 import com.example.myapplication.utils.network.RequestErrorNavigate;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,10 +70,6 @@ public class ProductGridFragment extends Fragment implements OnEditListener, OnD
                 ((NavigationHost)getActivity()).navigateTo(new ProductCreateFragment(), true);
             }
         });
-//        List<ProductEntry> list = ProductEntry.initProductEntryList(getResources());
-//        ProductCardRecyclerViewAdapter adapter = new ProductCardRecyclerViewAdapter(list);
-//
-//        recyclerView.setAdapter(adapter);
 
         int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
@@ -74,7 +77,7 @@ public class ProductGridFragment extends Fragment implements OnEditListener, OnD
 
         recyclerView.addItemDecoration(new ProductGridItemDecoration(largePadding, smallPadding));
 
-        listProductEntry = new ArrayList<ProductEntry>();
+        listProductEntry = new ArrayList();
         productEntryAdapter = new ProductCardRecyclerViewAdapter(listProductEntry, this, this);
 
         recyclerView.setAdapter(productEntryAdapter);
@@ -89,13 +92,8 @@ public class ProductGridFragment extends Fragment implements OnEditListener, OnD
 
                         if (response.isSuccessful()) {
                             List<ProductDTO> list = response.body();
-//                            String res = list.get(0).toString();
-//                            Log.d(TAG, "--------result server-------" + res);
-
-                            //List<ProductEntry> newlist = new ArrayList<ProductEntry>();//ProductEntry.initProductEntryList(getResources());
-
-                            for (ProductDTO item : list) {
-                                ProductEntry pe = new ProductEntry(item.getTitle(), item.getUrl(), item.getUrl(), item.getPrice(), "sdfasd");
+                           for (ProductDTO item : list) {
+                                ProductEntry pe = new ProductEntry(item.getId(), item.getTitle(), item.getUrl(), item.getUrl(), item.getPrice(), "sdfasd");
                                 listProductEntry.add(pe);
                             }
                             productEntryAdapter.notifyDataSetChanged();
@@ -134,13 +132,67 @@ public class ProductGridFragment extends Fragment implements OnEditListener, OnD
     }
 
     @Override
-    public void deleteItem(ProductEntry productEntry) {
-        listProductEntry.remove(productEntry);
-        productEntryAdapter.notifyDataSetChanged();
+    public void deleteItem(final ProductEntry productEntry) {
+        new MaterialAlertDialogBuilder(getContext())
+                .setTitle("Видалення")
+                .setMessage("Ви дійсно бажаєте видалити \""+ productEntry.title+"\"?")
+                .setNegativeButton("Скасувати", null)
+                .setPositiveButton("Видалити", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        CommonUtils.showLoading(getContext());
+                        ProductNetworkService.getInstance()
+                                .getJSONApi()
+                                .DeleteRequest(productEntry.id)
+                                .enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                                        CommonUtils.hideLoading();
+
+                                        if (response.isSuccessful()) {
+                                            listProductEntry.remove(productEntry);
+                                            productEntryAdapter.notifyDataSetChanged();
+                                         } else {
+                                            //  Log.e(TAG, "_______________________" + response.errorBody().charStream());
+
+                                            try {
+//                                                String json = response.errorBody().string();
+//                                                Gson gson  = new Gson();
+//                                                ProductCreateInvalidDTO resultBad = gson.fromJson(json, ProductCreateInvalidDTO.class);
+                                                //Log.d(TAG,"++++++++++++++++++++++++++++++++"+response.errorBody().string());
+                                                //errormessage.setText(resultBad.getInvalid());
+                                            } catch (Exception e) {
+                                                //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                                        CommonUtils.hideLoading();
+                                        Log.e("ERROR","*************ERORR request***********");
+                                        t.printStackTrace();
+
+                                    }
+                                });
+
+
+
+
+
+
+                        //Toast.makeText(getContext(), "Delete "+productEntry.id, Toast.LENGTH_LONG).show();
+                    }
+                })
+                .show();
+
+//        listProductEntry.remove(productEntry);
+//        productEntryAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void editItem(ProductEntry productEntry, int index) {
+        Toast.makeText(getContext(), "Edit", Toast.LENGTH_LONG).show();
 //        Intent intent = new Intent(this, EditActivity.class);
 //        intent.putExtra(Constants.PERSON_INTENT_EDIT, true);
 //        intent.putExtra(Constants.PERSON_INTENT_INDEX, index);
