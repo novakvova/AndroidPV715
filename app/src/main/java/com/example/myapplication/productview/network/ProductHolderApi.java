@@ -3,6 +3,7 @@ package com.example.myapplication.productview.network;
 import com.example.myapplication.productview.dto.ProductCreateDTO;
 import com.example.myapplication.productview.dto.ProductCreateResultDTO;
 import com.example.myapplication.productview.dto.ProductDTO;
+import com.example.myapplication.productview.dto.ProductEditDTO;
 
 import java.util.List;
 
@@ -23,5 +24,10 @@ public interface ProductHolderApi {
 
     @DELETE("products/delete/{id}")
     public Call<ResponseBody> DeleteRequest(@Path("id") int id);
+
+    @GET("products/edit/{id}")
+    public Call<ProductEditDTO> getEditProduct(@Path("id") int id);
+    @POST("products/edit")
+    public Call<Void> editProduct(@Body ProductEditDTO productEditDTO);
 
 }

@@ -98,6 +98,7 @@ public class ProductGridFragment extends Fragment implements OnEditListener, OnD
     }
 
     private void loadProductEntryList() {
+
         CommonUtils.showLoading(getActivity());
         ProductNetworkService.getInstance()
                 .getJSONApi()
@@ -108,6 +109,7 @@ public class ProductGridFragment extends Fragment implements OnEditListener, OnD
                         CommonUtils.hideLoading();
 
                         if (response.isSuccessful()) {
+                            listProductEntry.clear();
                             List<ProductDTO> list = response.body();
                             for (ProductDTO item : list) {
                                 ProductEntry pe = new ProductEntry(item.getId(), item.getTitle(), item.getUrl(), item.getUrl(), item.getPrice(), "sdfasd");
@@ -201,7 +203,16 @@ public class ProductGridFragment extends Fragment implements OnEditListener, OnD
     @Override
     public void editItem(ProductEntry productEntry, int index) {
         Intent intent = new Intent(getActivity(), ProductEditActivity.class);
-        intent.putExtra(ConstantIds.PRODUCT_INTENT_OBJECT, productEntry.id);
+        intent.putExtra(ConstantIds.PRODUCT_INTENT_ID, productEntry.id);
         startActivityForResult(intent, REQUEST_CODE_EDIT);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_CODE_EDIT){
+            if(resultCode == -1){
+                loadProductEntryList();
+            }
+        }
     }
 }
