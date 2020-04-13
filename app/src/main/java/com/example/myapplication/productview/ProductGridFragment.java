@@ -148,41 +148,41 @@ public class ProductGridFragment extends Fragment implements OnEditListener, OnD
     }
 
     private void deleteConfirm(final ProductEntry productEntry) {
-        CommonUtils.showLoading(getContext());
-        ProductNetworkService.getInstance()
-                .getJSONApi()
-                .DeleteRequest(productEntry.id)
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                        CommonUtils.hideLoading();
+            CommonUtils.showLoading(getContext());
+            ProductNetworkService.getInstance()
+                    .getJSONApi()
+                    .DeleteRequest(productEntry.id)
+                    .enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                            CommonUtils.hideLoading();
 
-                        if (response.isSuccessful()) {
-                            listProductEntry.remove(productEntry);
-                            productEntryAdapter.notifyDataSetChanged();
-                        } else {
-                            //  Log.e(TAG, "_______________________" + response.errorBody().charStream());
+                            if (response.isSuccessful()) {
+                                listProductEntry.remove(productEntry);
+                                productEntryAdapter.notifyDataSetChanged();
+                            } else {
+                                //  Log.e(TAG, "_______________________" + response.errorBody().charStream());
 
-                            try {
+                                try {
 //                                                String json = response.errorBody().string();
 //                                                Gson gson  = new Gson();
 //                                                ProductCreateInvalidDTO resultBad = gson.fromJson(json, ProductCreateInvalidDTO.class);
-                                //Log.d(TAG,"++++++++++++++++++++++++++++++++"+response.errorBody().string());
-                                //errormessage.setText(resultBad.getInvalid());
-                            } catch (Exception e) {
-                                //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                    //Log.d(TAG,"++++++++++++++++++++++++++++++++"+response.errorBody().string());
+                                    //errormessage.setText(resultBad.getInvalid());
+                                } catch (Exception e) {
+                                    //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                        CommonUtils.hideLoading();
-                        Log.e("ERROR", "*************ERORR request***********");
-                        t.printStackTrace();
+                        @Override
+                        public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                            CommonUtils.hideLoading();
+                            Log.e("ERROR", "*************ERORR request***********");
+                            t.printStackTrace();
 
-                    }
-                });
+                        }
+                    });
     }
 
     @Override
