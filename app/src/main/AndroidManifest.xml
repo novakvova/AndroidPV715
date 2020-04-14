@@ -15,10 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".user.ProfileActivity"  android:label="@string/title_activity_profile"
+            android:theme="@style/AppTheme.ProfileTheme"></activity>
         <activity
             android:name=".productview.ProductEditActivity"
             android:label="@string/title_activity_product_edit"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

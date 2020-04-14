@@ -6,6 +6,10 @@
         android:title="Головна"
         app:showAsAction="ifRoom"/>
 
+    <item android:id="@+id/profile"
+        android:title="ПрофильЮзера"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/register"
         android:title="Реєстрація"
         app:showAsAction="never"/>
@@ -25,4 +29,5 @@
     <item android:id="@+id/logout"
         android:title="Вихід"
         app:showAsAction="never"/>
+
 </menu>

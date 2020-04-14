@@ -1,27 +1,16 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.myapplication.account.JwtServiceHolder;
 import com.example.myapplication.productview.ProductGridFragment;
+import com.example.myapplication.user.ProfileActivity;
 import com.example.myapplication.userview.UserGridFragment;
-import com.example.myapplication.utils.network.RequestErrorNavigate;
 
 public class MainActivity extends BaseActivity {
 
@@ -61,6 +50,11 @@ public class MainActivity extends BaseActivity {
             case R.id.home:
                 this.navigateTo(new ProductGridFragment(), false);
                 return true;
+            case R.id.profile:
+                intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                return true;
+
             case R.id.register:
                 this.navigateTo(new RegisterFragment(), false);
                 return true;
